@@ -2,12 +2,13 @@
 import { ref } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
 
 let name = ref("");
 let content = ref("");
 
 const editor = useEditor({
-  extensions: [StarterKit],
+  extensions: [StarterKit, Underline],
   content: content.value,
   onUpdate: ({ editor }) => {
     content.value = editor.getHTML();
@@ -18,7 +19,7 @@ const editor = useEditor({
 <template>
   <v-card class="mx-auto" min-height="500" min-width="500">
     <v-card-item class="bg-blue">
-      <v-card-title> テンプレート </v-card-title>
+      <v-card-title> テンプレート設定 </v-card-title>
       <template v-slot:append>
         <v-btn color="white" icon="$plus" size="small"></v-btn>
       </template>
@@ -81,6 +82,13 @@ const editor = useEditor({
               @click="editor?.chain().toggleItalic().focus().run()"
             ></v-btn>
             <v-btn
+              icon="$underLine"
+              density="comfortable"
+              rounded="sm"
+              variant="text"
+              @click="editor?.chain().toggleUnderline().focus().run()"
+            ></v-btn>
+            <v-btn
               icon="$strike"
               density="comfortable"
               rounded="sm"
@@ -114,9 +122,6 @@ const editor = useEditor({
           <v-row>
             <editor-content class="editor-box" :editor="editor" />
           </v-row>
-          <!-- <v-row>
-            <div class="text-body-1">body1ああああ<br />aaa</div>
-          </v-row> -->
           <v-row>
             <pre><code>{{ content }}</code></pre>
           </v-row>
@@ -127,13 +132,25 @@ const editor = useEditor({
   <editor-content class="editor-box" :editor="editor" />
 </template>
 
-<style scoped>
+<style>
+/* vuetifyのreset cssで無効化されてしまうため再定義 */
 .editor-box {
   font-size: 1rem !important;
   font-weight: 400;
   line-height: 1.5rem;
 
-  border: 1px solid grey;
+  border: 1px solid #9e9e9e;
   width: 100%;
+}
+
+/* vuetifyのresetでpadding 0にされてしまうためrevert */
+.editor-box ul {
+  padding: revert !important;
+}
+.editor-box ol {
+  padding: revert !important;
+}
+.editor-box li {
+  padding: revert !important;
 }
 </style>
