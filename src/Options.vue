@@ -2,29 +2,17 @@
 import { ref } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
-import { watch } from "vue";
 
-// const items = ref(["foo", "bar"]);
 let name = ref("");
-const content = ref("");
+let content = ref("");
 
 const editor = useEditor({
-  content: "hh",
   extensions: [StarterKit],
+  content: content.value,
+  onUpdate: ({ editor }) => {
+    content.value = editor.getHTML();
+  },
 });
-
-// const emit = defineEmits(["update:content"]);
-// watch(
-//   () => content,
-//   (newValue, oldValue) => {
-//     const isSame = newValue === oldValue;
-//     console.log(`Same: ${isSame}`);
-//     if (isSame) {
-//       return;
-//     }
-//     editor.value?.commands.setContent(newValue, false);
-//   }
-// );
 </script>
 
 <template>
@@ -124,14 +112,28 @@ const editor = useEditor({
             ></v-btn>
           </v-row>
           <v-row>
-            <editor-content :editor="editor" />
-            <!-- <v-text-field></v-text-field> -->
+            <editor-content class="editor-box" :editor="editor" />
           </v-row>
-          <!-- <v-textarea :value="content" readonly auto-grow></v-textarea> -->
+          <!-- <v-row>
+            <div class="text-body-1">body1ああああ<br />aaa</div>
+          </v-row> -->
+          <v-row>
+            <pre><code>{{ content }}</code></pre>
+          </v-row>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
   </v-card>
+  <editor-content class="editor-box" :editor="editor" />
 </template>
 
-<style scoped></style>
+<style scoped>
+.editor-box {
+  font-size: 1rem !important;
+  font-weight: 400;
+  line-height: 1.5rem;
+
+  border: 1px solid grey;
+  width: 100%;
+}
+</style>

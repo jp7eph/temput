@@ -7,7 +7,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-import { mdiPlus, mdiPencil, mdiDelete, mdiUndo, mdiRedo, mdiFormatBold, mdiFormatItalic, mdiFormatStrikethrough, mdiFormatListBulleted, mdiFormatListNumbered, mdiCodeTags } from '@mdi/js'
+import { mdiPlus, mdiPencil, mdiDelete, mdiUndo, mdiRedo, mdiFormatBold, mdiFormatItalic, mdiFormatStrikethrough, mdiFormatListBulleted, mdiFormatListNumbered, mdiXml } from '@mdi/js'
 
 const vuetify = createVuetify({
     components,
@@ -26,7 +26,7 @@ const vuetify = createVuetify({
             strike: mdiFormatStrikethrough,
             listBulleted: mdiFormatListBulleted,
             listNumbered: mdiFormatListNumbered,
-            code: mdiCodeTags,
+            code: mdiXml,
         },
         sets: {
             mdi,
