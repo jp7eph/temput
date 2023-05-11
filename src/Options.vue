@@ -12,6 +12,13 @@ function addTemplate() {
   templatesRef.value.push(new Template());
 }
 
+function removeTemplate(id: string) {
+  templatesRef.value.splice(
+    templatesRef.value.findIndex((t) => t.id === id),
+    1
+  );
+}
+
 // TODO: 要回収 template毎にeditorを作る必要があるかも
 const editor = useEditor({
   extensions: [StarterKit, Underline],
@@ -61,7 +68,10 @@ const editor = useEditor({
               ></v-text-field>
             </v-col>
             <v-col cols="2">
-              <v-btn icon="$delete"></v-btn>
+              <v-btn
+                icon="$delete"
+                @click="removeTemplate(template.id)"
+              ></v-btn>
             </v-col>
           </v-row>
           <v-row>

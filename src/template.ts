@@ -6,6 +6,7 @@ export class Template {
     value: string;
 
     constructor() {
+        // UUIDの先頭文字のみIDとして使用
         this.id = uuidv4().split('-')[0];
         this.name = '';
         this.value = '';
