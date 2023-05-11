@@ -3,15 +3,21 @@ import { ref } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import { Template } from "./template";
 
-let name = ref("");
-let content = ref("");
+const templates: Template[] = [];
+const templatesRef = ref(templates);
 
+function addTemplate() {
+  templatesRef.value.push(new Template());
+}
+
+// TODO: 要回収 template毎にeditorを作る必要があるかも
 const editor = useEditor({
   extensions: [StarterKit, Underline],
-  content: content.value,
+  // content: content.value,
   onUpdate: ({ editor }) => {
-    content.value = editor.getHTML();
+    // content.value = editor.getHTML();
   },
 });
 </script>
@@ -21,18 +27,25 @@ const editor = useEditor({
     <v-card-item class="bg-blue">
       <v-card-title> テンプレート設定 </v-card-title>
       <template v-slot:append>
-        <v-btn color="white" icon="$plus" size="small"></v-btn>
+        <v-btn
+          color="white"
+          icon="$plus"
+          size="small"
+          @click="addTemplate"
+        ></v-btn>
       </template>
     </v-card-item>
     <v-divider></v-divider>
     <v-expansion-panels>
-      <v-expansion-panel>
+      <v-expansion-panel v-for="template in templatesRef">
         <v-expansion-panel-title>
           <template v-slot:default="{ expanded }">
             <v-row no-gutters>
-              <v-col cols="2" class="d-flex justify-start"> #1 </v-col>
-              <v-col cols="10">
-                <span> {{ name }} </span>
+              <v-col cols="4" class="d-flex justify-start text-caption">
+                #{{ template.id }}
+              </v-col>
+              <v-col cols="8">
+                <span> {{ template.name }} </span>
               </v-col>
             </v-row>
           </template>
@@ -41,7 +54,7 @@ const editor = useEditor({
           <v-row align="center" justify="center">
             <v-col cols="10">
               <v-text-field
-                v-model="name"
+                v-model="template.name"
                 hide-details
                 placeholder="name"
                 variant="underlined"
@@ -123,13 +136,12 @@ const editor = useEditor({
             <editor-content class="editor-box" :editor="editor" />
           </v-row>
           <v-row>
-            <pre><code>{{ content }}</code></pre>
+            <pre><code>{{ template.value }}</code></pre>
           </v-row>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
   </v-card>
-  <editor-content class="editor-box" :editor="editor" />
 </template>
 
 <style>
