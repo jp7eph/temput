@@ -55,16 +55,14 @@ function removeTemplate(id: string) {
     <v-main style="min-height: 500px; min-width: 500px">
       <v-list lines="one">
         <v-list-item v-for="template in templatesRef" :key="template.id">
-          <template v-slot="">
-            <v-row no-gutters>
-              <v-col cols="4" class="d-flex justify-start text-disabled">
-                #{{ template.id.split("-")[0] }}
-              </v-col>
-              <v-col cols="8">
-                <span> {{ template.name }} </span>
-              </v-col>
-            </v-row>
-          </template>
+          <v-row no-gutters>
+            <v-col cols="4" class="d-flex justify-start text-disabled">
+              #{{ template.id.split("-")[0] }}
+            </v-col>
+            <v-col cols="8">
+              <span> {{ template.name }} </span>
+            </v-col>
+          </v-row>
           <template v-slot:append>
             <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
             <v-btn icon="$pencil" variant="text">
