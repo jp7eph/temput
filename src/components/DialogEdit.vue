@@ -114,8 +114,16 @@ const editor = useEditor({
   </v-card>
 </template>
 
-<style>
+<style lang="scss">
 /* HACK: scopedをつけると正しく反映されないため削除 */
+
+.ProseMirror {
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+}
+
 /* vuetifyのreset cssで無効化されてしまうため再定義 */
 .editor-box {
   font-size: 1rem !important;
@@ -124,6 +132,7 @@ const editor = useEditor({
 
   border: 1px solid #9e9e9e;
   width: 100%;
+  padding: 8px;
 }
 
 /* vuetifyのresetでpadding 0にされてしまうためrevert */
