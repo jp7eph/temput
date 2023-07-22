@@ -15,6 +15,9 @@ const manifest = defineManifest({
     '48': 'icons/temput_48.png',
     '128': 'icons/temput_128.png',
   },
+  permissions: [
+    'storage'
+  ],
   action: {
     'default_popup': 'index.html'
   },

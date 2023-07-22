@@ -5,16 +5,35 @@ import DialogEdit from "./DialogEdit.vue";
 
 const templates: Template[] = [];
 const templatesRef = ref(templates);
+
+function loadTemplate() {
+  chrome.storage.local.get("templates", function (value) {
+    // ストレージに保存するとObjectになってしまうのでArrayに変換
+    const t = Object.values(value.templates);
+    if (Array.isArray(t)) {
+      templatesRef.value = [...(t as Template[])];
+      console.debug("template loaded!");
+    } else {
+      console.error("err: saved value tranlate to array!");
+    }
+  });
+}
+loadTemplate();
+
 // テンプレート配列変更時の処理
 watch(
   templatesRef,
   () => {
-    // 保存処理を追加
-    // console.log({ templates });
+    saveTemplate(templatesRef.value);
   },
-  // deepオプションを付けないと配列の要素変更を監視できない
+  // deepオプションを付けないと配列の要素変更を監視できないq
   { deep: true }
 );
+
+function saveTemplate(templates: Template[]) {
+  chrome.storage.local.set({ templates: templates });
+  console.debug("template saved!");
+}
 
 function addTemplate() {
   templatesRef.value.push(new Template());
