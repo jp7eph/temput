@@ -18,6 +18,9 @@ const manifest = defineManifest({
   action: {
     'default_popup': 'index.html'
   },
+  options_ui: {
+    'page': 'options.html'
+  }
 })
 
 // https://vitejs.dev/config/
