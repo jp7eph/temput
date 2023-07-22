@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useEditor, EditorContent } from "@tiptap/vue-3";
-import { Template } from "./template";
+import { Template } from "../template";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 
