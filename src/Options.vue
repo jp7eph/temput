@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { Template } from "./template";
-import DialogEdit from "./DialogEdit.vue";
+import DialogEdit from "./components/DialogEdit.vue";
 
 const templates: Template[] = [];
 const templatesRef = ref(templates);
