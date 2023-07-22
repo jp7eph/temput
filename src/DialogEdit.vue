@@ -17,6 +17,7 @@ const emit = defineEmits<Emits>();
 const editor = useEditor({
   extensions: [StarterKit, Underline],
   content: props.template.value,
+  autofocus: true,
   onUpdate: ({ editor }) => {
     // 変更時に親コンポーネントに送信
     emit("update:value", editor.getHTML());
@@ -24,17 +25,17 @@ const editor = useEditor({
 });
 </script>
 <template>
-  <v-card style="min-height: 300px; min-width: 300px">
-    <!-- <v-toolbar color="blue">
-      <v-spacer></v-spacer>
-      <v-btn icon="$close"></v-btn>
-    </v-toolbar> -->
+  <v-card title="テンプレート編集" style="min-height: 300px; min-width: 300px">
+    <!-- タイトルバーの閉じるボタン 親コンポーネントの修正も必要 -->
+    <!-- <template v-slot:append>
+      <v-btn icon="$close" variant="text" @click=""></v-btn>
+    </template> -->
     <v-card-text>
       <v-text-field
         v-model="template.name"
         hide-details
         clearable
-        placeholder="name"
+        placeholder="テンプレート名"
         variant="underlined"
       >
       </v-text-field>

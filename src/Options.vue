@@ -10,7 +10,7 @@ watch(
   templatesRef,
   () => {
     // 保存処理を追加
-    console.log({ templates });
+    // console.log({ templates });
   },
   // deepオプションを付けないと配列の要素変更を監視できない
   { deep: true }
@@ -26,8 +26,6 @@ function removeTemplate(id: string) {
     1
   );
 }
-
-const dialog = ref(false);
 </script>
 
 <template>
@@ -50,12 +48,17 @@ const dialog = ref(false);
           </template>
           <template v-slot:append>
             <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
-            <v-dialog v-model="dialog" width="auto">
-              <template v-slot:activator="{ props }">
-                <v-btn icon="$pencil" variant="text" v-bind="props"></v-btn>
-              </template>
-              <DialogEdit :template="template" v-model:value="template.value" />
-            </v-dialog>
+            <v-btn icon="$pencil" variant="text">
+              <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
+              <v-icon></v-icon>
+              <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
+              <v-dialog activator="parent" width="auto">
+                <DialogEdit
+                  :template="template"
+                  v-model:value="template.value"
+                />
+              </v-dialog>
+            </v-btn>
             <v-btn
               icon="$delete"
               variant="text"
