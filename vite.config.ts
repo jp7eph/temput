@@ -8,7 +8,7 @@ const manifest = defineManifest({
   manifest_version: 3,
   name: 'temput',
   description: 'Enter template text',
-  version: '0.0.1',
+  version: '0.1.0',
   icons: {
     '16': 'icons/temput_16.png',
     '32': 'icons/temput_32.png',
