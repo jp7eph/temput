@@ -11,7 +11,9 @@ categories:
       - 'bugfix'
       - 'bug'
   - title: '🧰 Maintenance'
-    label: 'chore'
+    labels: 
+      - 'chore'
+      - 'documentation'
   - title: '⛓️ Dependency Updates'
     label: 'dependencies'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
