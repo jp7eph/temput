@@ -52,7 +52,7 @@ function writeClipBoard(value: string) {
           </v-row>
           <template v-slot:append>
             <v-btn
-              icon="$paste"
+              icon="$copy"
               variant="text"
               @click="writeClipBoard(template.value)"
             ></v-btn>
