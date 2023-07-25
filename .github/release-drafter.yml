@@ -43,7 +43,7 @@ autolabeler:
       - '/^chore[/-].+/'
   - label: documentation
     branch:
-      - '/doc(umentation)[/-].+/'
+      - '/^doc(umentation)[/-].+/'
     files:
       - '*.md'
   - label: enhancement
