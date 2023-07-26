@@ -7,8 +7,8 @@ import { crx, defineManifest } from '@crxjs/vite-plugin'
 const manifest = defineManifest({
   manifest_version: 3,
   name: 'temput',
-  description: 'Enter template text',
-  version: '0.1.0',
+  description: 'Copy template text',
+  version: '0.1.1',
   icons: {
     '16': 'icons/temput_16.png',
     '32': 'icons/temput_32.png',
