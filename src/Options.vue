@@ -24,14 +24,14 @@ loadTemplate();
 watch(
   templatesRef,
   () => {
-    saveTemplate(templatesRef.value);
+    saveTemplate(toRaw(templatesRef.value));
   },
-  // deepオプションを付けないと配列の要素変更を監視できないq
+  // deepオプションを付けないと配列の要素変更を監視できない
   { deep: true }
 );
 
 function saveTemplate(templates: Template[]) {
-  chrome.storage.local.set({ templates: toRaw(templates) });
+  chrome.storage.local.set({ templates: templates });
   console.debug("template saved!");
 }
 
