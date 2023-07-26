@@ -3,6 +3,8 @@ import { ref, watch, toRaw } from "vue";
 import { Template } from "./template";
 import DialogEdit from "./components/DialogEdit.vue";
 
+const tab = ref("templates");
+
 const templates: Template[] = [];
 const templatesRef = ref(templates);
 
@@ -45,6 +47,11 @@ function removeTemplate(id: string) {
     1
   );
 }
+
+function exportSettings() {
+  const json = JSON.stringify(toRaw(templatesRef.value));
+  console.log(json);
+}
 </script>
 
 <template>
@@ -53,38 +60,51 @@ function removeTemplate(id: string) {
       <v-btn color="white" prepend-icon="$plus" @click="addTemplate">NEW</v-btn>
     </v-app-bar>
     <v-main style="min-height: 500px; min-width: 500px">
-      <v-list lines="one">
-        <v-list-item v-for="template in templatesRef" :key="template.id">
-          <v-row no-gutters>
-            <v-col cols="4" class="d-flex justify-start text-disabled">
-              #{{ template.id.split("-")[0] }}
-            </v-col>
-            <v-col cols="8">
-              <span> {{ template.name }} </span>
-            </v-col>
-          </v-row>
-          <template v-slot:append>
-            <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
-            <v-btn icon="$pencil" variant="text">
-              <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
-              <v-icon></v-icon>
-              <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
-              <v-dialog activator="parent" width="auto">
-                <DialogEdit
-                  :template="template"
-                  v-model:value="template.value"
-                />
-              </v-dialog>
-            </v-btn>
-            <v-btn
-              icon="$delete"
-              variant="text"
-              color="error"
-              @click="removeTemplate(template.id)"
-            ></v-btn>
-          </template>
-        </v-list-item>
-      </v-list>
+      <v-tabs v-model="tab" align-tabs="center">
+        <v-tab value="templates">テンプレート一覧</v-tab>
+        <v-tab value="settings">設定</v-tab>
+      </v-tabs>
+      <v-window v-model="tab">
+        <v-window-item value="templates">
+          <v-list lines="one">
+            <v-list-item v-for="template in templatesRef" :key="template.id">
+              <v-row no-gutters>
+                <v-col cols="4" class="d-flex justify-start text-disabled">
+                  #{{ template.id.split("-")[0] }}
+                </v-col>
+                <v-col cols="8">
+                  <span> {{ template.name }} </span>
+                </v-col>
+              </v-row>
+              <template v-slot:append>
+                <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
+                <v-btn icon="$pencil" variant="text">
+                  <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
+                  <v-icon></v-icon>
+                  <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
+                  <v-dialog activator="parent" width="auto">
+                    <DialogEdit
+                      :template="template"
+                      v-model:value="template.value"
+                    />
+                  </v-dialog>
+                </v-btn>
+                <v-btn
+                  icon="$delete"
+                  variant="text"
+                  color="error"
+                  @click="removeTemplate(template.id)"
+                ></v-btn>
+              </template>
+            </v-list-item>
+          </v-list>
+        </v-window-item>
+        <v-window-item value="settings">
+          <v-btn color="white" prepend-icon="$plus" @click="exportSettings"
+            >NEW</v-btn
+          >
+        </v-window-item>
+      </v-window>
     </v-main>
   </v-layout>
 </template>
