@@ -10,7 +10,7 @@ Browser extension for copy template text
 1. 下記リンクからブラウザの拡張機能をインストールします  
    [temput | Chrome ウェブストア](https://chrome.google.com/webstore/detail/temput/jaknhaokmakgpcpiphfnldapmjcgoiff)
 
-1. 設定画面よりテンプレートを追加し、テンプレート化したい文字列を入力します
+1. 設定画面よりテンプレート化したい文字列を入力します
 
 1. ブラウザアクションをクリックし、コピーボタンを押下します
 
