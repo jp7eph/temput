@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, toRaw } from "vue";
 import { Template } from "./template";
 import DialogEdit from "./components/DialogEdit.vue";
 
@@ -31,7 +31,7 @@ watch(
 );
 
 function saveTemplate(templates: Template[]) {
-  chrome.storage.local.set({ templates: templates });
+  chrome.storage.local.set({ templates: toRaw(templates) });
   console.debug("template saved!");
 }
 
