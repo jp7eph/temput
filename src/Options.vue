@@ -5,6 +5,7 @@ import { Setting } from "./settting";
 import DialogEdit from "./components/DialogEdit.vue";
 import { saveAs } from "file-saver";
 import dayjs from "dayjs";
+import { mdiDownload, mdiPlus } from "@mdi/js";
 
 const tab = ref("templates");
 
@@ -68,9 +69,7 @@ function importSetting() {}
 
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar title="テンプレート設定" class="bg-blue">
-      <v-btn color="white" prepend-icon="$plus" @click="addTemplate">NEW</v-btn>
-    </v-app-bar>
+    <v-app-bar title="テンプレート設定" class="bg-blue"> </v-app-bar>
     <v-main style="min-height: 500px; min-width: 500px">
       <v-tabs v-model="tab" align-tabs="center">
         <v-tab value="templates">テンプレート一覧</v-tab>
@@ -78,6 +77,23 @@ function importSetting() {}
       </v-tabs>
       <v-window v-model="tab">
         <v-window-item value="templates">
+          <!-- FAB -->
+          <v-layout-item
+            class="text-end"
+            model-value
+            position="bottom"
+            size="88"
+          >
+            <div class="ma-4">
+              <v-btn
+                class="mt-auto text-white"
+                color="blue"
+                :icon="mdiPlus"
+                size="large"
+                @click="addTemplate"
+              />
+            </div>
+          </v-layout-item>
           <v-list lines="one">
             <v-list-item v-for="template in templatesRef" :key="template.id">
               <v-row no-gutters>
@@ -121,14 +137,16 @@ function importSetting() {}
                   variant="text"
                   prepend-icon="$download"
                   @click="exportSetting"
-                  >Export</v-btn
                 >
+                  Export
+                </v-btn>
                 <v-btn
                   variant="text"
                   prepend-icon="$upload"
                   @click="importSetting"
-                  >Import</v-btn
                 >
+                  Import
+                </v-btn>
               </div>
             </v-row>
           </v-container>
