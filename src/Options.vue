@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, watch, toRaw } from "vue";
 import { Template } from "./template";
+import { Setting } from "./settting";
 import DialogEdit from "./components/DialogEdit.vue";
+import { saveAs } from "file-saver";
+import dayjs from "dayjs";
 
 const tab = ref("templates");
 
@@ -49,8 +52,15 @@ function removeTemplate(id: string) {
 }
 
 function exportSettings() {
-  const json = JSON.stringify(toRaw(templatesRef.value));
-  console.log(json);
+  const setting = new Setting();
+  setting.templates = toRaw(templatesRef.value);
+  const blob = new Blob([JSON.stringify(setting)], {
+    type: "application/json",
+  });
+  const now = dayjs().format("YYYYMMDD-HHmmss");
+  const fileName = `temput_${now}.json`;
+  saveAs(blob, fileName);
+  console.log(`export setting: ${fileName}`);
 }
 </script>
 
