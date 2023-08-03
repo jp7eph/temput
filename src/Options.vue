@@ -51,7 +51,7 @@ function removeTemplate(id: string) {
   );
 }
 
-function exportSettings() {
+function exportSetting() {
   const setting = new Setting();
   setting.templates = toRaw(templatesRef.value);
   const blob = new Blob([JSON.stringify(setting)], {
@@ -62,6 +62,8 @@ function exportSettings() {
   saveAs(blob, fileName);
   console.log(`export setting: ${fileName}`);
 }
+
+function importSetting() {}
 </script>
 
 <template>
@@ -110,9 +112,26 @@ function exportSettings() {
           </v-list>
         </v-window-item>
         <v-window-item value="settings">
-          <v-btn color="white" prepend-icon="$plus" @click="exportSettings"
-            >NEW</v-btn
-          >
+          <v-container>
+            <v-row align="center" no-gutters>
+              <div class="text-body-1">エクスポート/インポート</div>
+              <v-spacer></v-spacer>
+              <div class="d-flex">
+                <v-btn
+                  variant="text"
+                  prepend-icon="$download"
+                  @click="exportSetting"
+                  >Export</v-btn
+                >
+                <v-btn
+                  variant="text"
+                  prepend-icon="$upload"
+                  @click="importSetting"
+                  >Import</v-btn
+                >
+              </div>
+            </v-row>
+          </v-container>
         </v-window-item>
       </v-window>
     </v-main>
