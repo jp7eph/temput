@@ -5,12 +5,18 @@ import { Setting } from "./settting";
 import DialogEdit from "./components/DialogEdit.vue";
 import { saveAs } from "file-saver";
 import dayjs from "dayjs";
-import { mdiDownload, mdiPlus } from "@mdi/js";
+import { mdiDownload, mdiPlus, mdiRestoreAlert, mdiUpload } from "@mdi/js";
 
 const tab = ref("templates");
 
 const templates: Template[] = [];
 const templatesRef = ref(templates);
+
+const input = ref();
+
+const snackbar = ref(false);
+const snackbarText = ref("");
+const sncakbarColor = ref("");
 
 function loadTemplate() {
   chrome.storage.local.get("templates", function (value) {
@@ -64,7 +70,60 @@ function exportSetting() {
   console.log(`export setting: ${fileName}`);
 }
 
-function importSetting() {}
+function clickImportButton() {
+  input.value.click();
+}
+
+function importSetting() {
+  let setting = new Setting();
+  const file: File = input.value.files[0];
+  if (!file) {
+    showSnackBar("読み込みに失敗しました", "error");
+    console.error(`cannot read setting: ${file}`);
+  }
+  const reader = new FileReader();
+  reader.readAsText(file);
+
+  // 読み込み失敗時
+  reader.onerror = (e) => {
+    showSnackBar("読み込みに失敗しました", "error");
+    console.error({ e });
+  };
+
+  // 読み込み成功時
+  reader.onload = () => {
+    try {
+      setting = JSON.parse(reader.result as string) as Setting;
+      templatesRef.value = setting.templates;
+
+      showSnackBar("読み込みに成功しました", "success");
+      console.log(`import setting: ${file.name}`);
+    } catch (error) {
+      showSnackBar(
+        "JSONの読み込みに失敗しました\n正しい形式か確認してください",
+        "error"
+      );
+      console.error({ error });
+    }
+  };
+}
+
+function resetSetting() {
+    // TODO: リセット後、再読み込み出来ない
+
+  const setting = new Setting();
+  templatesRef.value = setting.templates;
+  // templatesRef.value = Template[]
+  console.log({ setting });
+  console.log({ templatesRef });
+  console.log("reset setting");
+}
+
+function showSnackBar(text: string, color: string) {
+  snackbarText.value = text;
+  sncakbarColor.value = color;
+  snackbar.value = true;
+}
 </script>
 
 <template>
@@ -129,31 +188,64 @@ function importSetting() {}
         </v-window-item>
         <v-window-item value="settings">
           <v-container>
-            <v-row align="center" no-gutters>
+            <v-row align="center" no-gutters class="mb-4">
               <div class="text-body-1">エクスポート/インポート</div>
               <v-spacer></v-spacer>
               <div class="d-flex">
                 <v-btn
+                  :icon="mdiDownload"
                   variant="text"
-                  prepend-icon="$download"
+                  class="mr-4"
                   @click="exportSetting"
                 >
-                  Export
+                  <v-icon></v-icon>
+                  <v-tooltip activator="parent">エクスポート</v-tooltip>
                 </v-btn>
                 <v-btn
+                  :icon="mdiUpload"
                   variant="text"
-                  prepend-icon="$upload"
-                  @click="importSetting"
+                  @click="clickImportButton"
                 >
-                  Import
+                  <v-icon></v-icon>
+                  <v-tooltip activator="parent">インポート</v-tooltip>
                 </v-btn>
+                <input
+                  ref="input"
+                  type="file"
+                  accept="application/json"
+                  style="display: none"
+                  @change="importSetting"
+                />
               </div>
+            </v-row>
+            <v-row no-gutters class="mb-4">
+              <div class="text-body-1">設定リセット</div>
+              <v-spacer></v-spacer>
+              <v-btn
+                :icon="mdiRestoreAlert"
+                variant="text"
+                color="error"
+                @click="resetSetting"
+              >
+                <v-icon></v-icon>
+              </v-btn>
             </v-row>
           </v-container>
         </v-window-item>
       </v-window>
+      <v-snackbar
+        v-model="snackbar"
+        :color="sncakbarColor"
+        multi-line
+        style="white-space: pre-wrap; word-wrap: break-word"
+      >
+        {{ snackbarText }}
+        <template v-slot:actions>
+          <v-btn variant="text" @click="snackbar = false"> Close </v-btn>
+        </template>
+      </v-snackbar>
     </v-main>
   </v-layout>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss"></style>
