@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Template } from "./template";
+import { mdiCog, mdiContentCopy } from "@mdi/js";
 
 const templates: Template[] = [];
 const templatesRef = ref(templates);
@@ -37,7 +38,7 @@ function writeClipBoard(value: string) {
 <template>
   <v-layout class="rounded rounded-md" style="min-width: 300px">
     <v-app-bar title="テンプレート一覧" class="bg-blue">
-      <v-btn color="white" icon="$cog" @click="openConfig"></v-btn>
+      <v-btn color="white" :icon="mdiCog" @click="openConfig"></v-btn>
     </v-app-bar>
     <v-main>
       <v-list lines="one">
@@ -52,7 +53,7 @@ function writeClipBoard(value: string) {
           </v-row>
           <template v-slot:append>
             <v-btn
-              icon="$copy"
+              :icon="mdiContentCopy"
               variant="text"
               @click="writeClipBoard(template.value)"
             ></v-btn>

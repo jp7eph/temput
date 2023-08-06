@@ -3,6 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Template } from "../template";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import { mdiFormatBold, mdiFormatItalic, mdiFormatListBulleted, mdiFormatListNumbered, mdiFormatStrikethrough, mdiFormatUnderline, mdiRedo, mdiUndo, mdiXml } from "@mdi/js";
 
 interface Props {
   template: Template;
@@ -41,14 +42,14 @@ const editor = useEditor({
       </v-text-field>
       <v-row class="mt-2">
         <v-btn
-          icon="$undo"
+          :icon="mdiUndo"
           density="comfortable"
           rounded="sm"
           variant="text"
           @click="editor?.chain().undo().focus().run()"
         ></v-btn
         ><v-btn
-          icon="$redo"
+          :icon="mdiRedo"
           density="comfortable"
           rounded="sm"
           variant="text"
@@ -56,28 +57,28 @@ const editor = useEditor({
         ></v-btn>
         <v-divider vertical></v-divider>
         <v-btn
-          icon="$bold"
+          :icon="mdiFormatBold"
           density="comfortable"
           rounded="sm"
           variant="text"
           @click="editor?.chain().toggleBold().focus().run()"
         ></v-btn>
         <v-btn
-          icon="$italic"
+          :icon="mdiFormatItalic"
           density="comfortable"
           rounded="sm"
           variant="text"
           @click="editor?.chain().toggleItalic().focus().run()"
         ></v-btn>
         <v-btn
-          icon="$underLine"
+          :icon="mdiFormatUnderline"
           density="comfortable"
           rounded="sm"
           variant="text"
           @click="editor?.chain().toggleUnderline().focus().run()"
         ></v-btn>
         <v-btn
-          icon="$strike"
+          :icon="mdiFormatStrikethrough"
           density="comfortable"
           rounded="sm"
           variant="text"
@@ -85,14 +86,14 @@ const editor = useEditor({
         ></v-btn>
         <v-divider vertical></v-divider>
         <v-btn
-          icon="$listBulleted"
+          :icon="mdiFormatListBulleted"
           density="comfortable"
           rounded="sm"
           variant="text"
           @click="editor?.chain().toggleBulletList().focus().run()"
         ></v-btn>
         <v-btn
-          icon="$listNumbered"
+          :icon="mdiFormatListNumbered"
           density="comfortable"
           rounded="sm"
           variant="text"
@@ -100,7 +101,7 @@ const editor = useEditor({
         ></v-btn>
         <v-divider vertical></v-divider>
         <v-btn
-          icon="$code"
+          :icon="mdiXml"
           density="comfortable"
           rounded="sm"
           variant="text"

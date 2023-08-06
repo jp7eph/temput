@@ -6,19 +6,13 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-import { mdiCog, mdiContentPaste, mdiContentCopy } from '@mdi/js'
+import { mdi } from 'vuetify/iconsets/mdi-svg'
 
 const vuetify = createVuetify({
     components,
     directives,
     icons: {
         defaultSet: 'mdi',
-        aliases: {
-            ...aliases,
-            cog: mdiCog,
-            copy: mdiContentCopy,
-        },
         sets: {
             mdi,
         }
