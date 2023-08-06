@@ -1,6 +1,7 @@
-import { defineConfig, version } from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { crx, defineManifest } from '@crxjs/vite-plugin'
+import PackageJson from './package.json'
 // import manifest from './manifest.json' // Node 14 & 16
 // import manifest from './manifest.json' assert { type: 'json' } // Node >=17
 
@@ -8,7 +9,7 @@ const manifest = defineManifest({
   manifest_version: 3,
   name: 'temput',
   description: 'Copy template text',
-  version: '0.1.1',
+  version: PackageJson.version,
   icons: {
     '16': 'icons/temput_16.png',
     '32': 'icons/temput_32.png',
