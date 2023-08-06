@@ -249,4 +249,4 @@ function showSnackBar(text: string, color: string) {
   </v-layout>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped></style>
