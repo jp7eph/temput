@@ -7,7 +7,9 @@ import { saveAs } from "file-saver";
 import dayjs from "dayjs";
 import {
   mdiClose,
+  mdiDelete,
   mdiDownload,
+  mdiPencil,
   mdiPlus,
   mdiRestoreAlert,
   mdiUpload,
@@ -167,7 +169,7 @@ function showSnackBar(text: string, color: string) {
               </v-row>
               <template v-slot:append>
                 <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
-                <v-btn icon="$pencil" variant="text" class="mr-4">
+                <v-btn :icon="mdiPencil" variant="text" class="mr-4">
                   <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
                   <v-icon></v-icon>
                   <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
@@ -179,7 +181,7 @@ function showSnackBar(text: string, color: string) {
                   </v-dialog>
                 </v-btn>
                 <v-btn
-                  icon="$delete"
+                  :icon="mdiDelete"
                   variant="text"
                   color="error"
                   @click="removeTemplate(template.id)"
