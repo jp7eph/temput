@@ -109,13 +109,8 @@ function importSetting() {
 }
 
 function resetSetting() {
-    // TODO: リセット後、再読み込み出来ない
-
   const setting = new Setting();
   templatesRef.value = setting.templates;
-  // templatesRef.value = Template[]
-  console.log({ setting });
-  console.log({ templatesRef });
   console.log("reset setting");
 }
 
@@ -236,7 +231,6 @@ function showSnackBar(text: string, color: string) {
       <v-snackbar
         v-model="snackbar"
         :color="sncakbarColor"
-        multi-line
         style="white-space: pre-wrap; word-wrap: break-word"
       >
         {{ snackbarText }}
