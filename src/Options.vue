@@ -5,7 +5,13 @@ import { Setting } from "./settting";
 import DialogEdit from "./components/DialogEdit.vue";
 import { saveAs } from "file-saver";
 import dayjs from "dayjs";
-import { mdiDownload, mdiPlus, mdiRestoreAlert, mdiUpload } from "@mdi/js";
+import {
+  mdiClose,
+  mdiDownload,
+  mdiPlus,
+  mdiRestoreAlert,
+  mdiUpload,
+} from "@mdi/js";
 
 const tab = ref("templates");
 
@@ -78,7 +84,7 @@ function importSetting() {
   let setting = new Setting();
   const file: File = input.value.files[0];
   if (!file) {
-    showSnackBar("読み込みに失敗しました", "error");
+    showSnackBar("インポートに失敗しました", "error");
     console.error(`cannot read setting: ${file}`);
   }
   const reader = new FileReader();
@@ -86,7 +92,7 @@ function importSetting() {
 
   // 読み込み失敗時
   reader.onerror = (e) => {
-    showSnackBar("読み込みに失敗しました", "error");
+    showSnackBar("インポートに失敗しました", "error");
     console.error({ e });
   };
 
@@ -96,16 +102,18 @@ function importSetting() {
       setting = JSON.parse(reader.result as string) as Setting;
       templatesRef.value = setting.templates;
 
-      showSnackBar("読み込みに成功しました", "success");
+      showSnackBar("インポートに成功しました", "success");
       console.log(`import setting: ${file.name}`);
     } catch (error) {
       showSnackBar(
-        "JSONの読み込みに失敗しました\n正しい形式か確認してください",
+        "JSONのインポートに失敗しました\n正しい形式か確認してください",
         "error"
       );
       console.error({ error });
     }
   };
+
+  // FIXME: file input elementがうまく初期化出来ない
 }
 
 function resetSetting() {
@@ -123,7 +131,6 @@ function showSnackBar(text: string, color: string) {
 
 <template>
   <v-layout class="rounded rounded-md">
-    <v-app-bar title="テンプレート設定" class="bg-blue"> </v-app-bar>
     <v-main style="min-height: 500px; min-width: 500px">
       <v-tabs v-model="tab" align-tabs="center">
         <v-tab value="templates">テンプレート一覧</v-tab>
@@ -160,7 +167,7 @@ function showSnackBar(text: string, color: string) {
               </v-row>
               <template v-slot:append>
                 <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
-                <v-btn icon="$pencil" variant="text">
+                <v-btn icon="$pencil" variant="text" class="mr-4">
                   <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
                   <v-icon></v-icon>
                   <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
@@ -235,7 +242,7 @@ function showSnackBar(text: string, color: string) {
       >
         {{ snackbarText }}
         <template v-slot:actions>
-          <v-btn variant="text" @click="snackbar = false"> Close </v-btn>
+          <v-btn variant="text" :icon="mdiClose" @click="snackbar = false" />
         </template>
       </v-snackbar>
     </v-main>
