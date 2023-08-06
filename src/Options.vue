@@ -21,6 +21,7 @@ const templates: Template[] = [];
 const templatesRef = ref(templates);
 
 const input = ref();
+const inputReset = ref();
 
 const snackbar = ref(false);
 const snackbarText = ref("");
@@ -115,7 +116,8 @@ function importSetting() {
     }
   };
 
-  // FIXME: file input elementがうまく初期化出来ない
+  // HACK: input elementが初期化出来ないのでresetボタン押下で無理やり初期化
+  inputReset.value.click();
 }
 
 function resetSetting() {
@@ -213,13 +215,16 @@ function showSnackBar(text: string, color: string) {
                   <v-icon></v-icon>
                   <v-tooltip activator="parent">インポート</v-tooltip>
                 </v-btn>
-                <input
-                  ref="input"
-                  type="file"
-                  accept="application/json"
-                  style="display: none"
-                  @change="importSetting"
-                />
+                <form>
+                  <input
+                    ref="input"
+                    type="file"
+                    accept="application/json"
+                    style="display: none"
+                    @change="importSetting"
+                  />
+                  <input ref="inputReset" type="reset" style="display: none" />
+                </form>
               </div>
             </v-row>
             <v-row no-gutters class="mb-4">
