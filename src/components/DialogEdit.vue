@@ -3,7 +3,17 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Template } from "../template";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import { mdiFormatBold, mdiFormatItalic, mdiFormatListBulleted, mdiFormatListNumbered, mdiFormatStrikethrough, mdiFormatUnderline, mdiRedo, mdiUndo, mdiXml } from "@mdi/js";
+import {
+  mdiFormatBold,
+  mdiFormatItalic,
+  mdiFormatListBulleted,
+  mdiFormatListNumbered,
+  mdiFormatStrikethrough,
+  mdiFormatUnderline,
+  mdiRedo,
+  mdiUndo,
+  mdiXml,
+} from "@mdi/js";
 
 interface Props {
   template: Template;
@@ -26,7 +36,11 @@ const editor = useEditor({
 });
 </script>
 <template>
-  <v-card title="テンプレート編集" style="min-height: 300px; min-width: 350px">
+  <v-card
+    title="テンプレート編集"
+    style="min-height: 300px; min-width: 500px; max-width: 700px"
+  >
+    <!-- <v-card title="テンプレート編集" style="min-height: 300px; min-width: 350px"> -->
     <!-- タイトルバーの閉じるボタン 親コンポーネントの修正も必要 -->
     <!-- <template v-slot:append>
       <v-btn icon="$close" variant="text" @click=""></v-btn>
