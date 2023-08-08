@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import {
   mdiFormatBold,
+  mdiFormatClear,
   mdiFormatItalic,
   mdiFormatListBulleted,
   mdiFormatListNumbered,
@@ -50,7 +51,7 @@ const editor = useEditor({
         v-model="template.name"
         hide-details
         clearable
-        placeholder="テンプレート名"
+        placeholder="テンプレート名（任意）"
         variant="underlined"
       >
       </v-text-field>
@@ -120,6 +121,14 @@ const editor = useEditor({
           rounded="sm"
           variant="text"
           @click="editor?.chain().toggleCodeBlock().focus().run()"
+        ></v-btn>
+        <v-divider vertical></v-divider>
+        <v-btn
+          :icon="mdiFormatClear"
+          density="comfortable"
+          rounded="sm"
+          variant="text"
+          @click="editor?.chain().clearNodes().focus().run()"
         ></v-btn>
       </v-row>
       <v-row>
