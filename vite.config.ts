@@ -17,7 +17,8 @@ const manifest = defineManifest({
     128: 'icons/temput_128.png',
   },
   permissions: [
-    'storage'
+    'storage',
+    'contextMenus'
   ],
   action: {
     default_popup: 'index.html'
@@ -25,7 +26,11 @@ const manifest = defineManifest({
   options_ui: {
     page: 'options.html',
     open_in_tab: true
-  }
+  },
+  background: {
+    service_worker: 'src/background.ts'
+  },
+  minimum_chrome_version: "98"
 })
 
 // https://vitejs.dev/config/
