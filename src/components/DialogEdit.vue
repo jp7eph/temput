@@ -41,7 +41,6 @@ const editor = useEditor({
     title="テンプレート編集"
     style="min-height: 300px; min-width: 500px; max-width: 700px"
   >
-    <!-- <v-card title="テンプレート編集" style="min-height: 300px; min-width: 350px"> -->
     <!-- タイトルバーの閉じるボタン 親コンポーネントの修正も必要 -->
     <!-- <template v-slot:append>
       <v-btn icon="$close" variant="text" @click=""></v-btn>
