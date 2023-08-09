@@ -3,7 +3,6 @@ import { Template } from "./template";
 export { };
 
 const parentMenuId = "temput_menu_parent";
-const emptyMenuId = "temput_menu_empty_favorite";
 
 chrome.runtime.onInstalled.addListener(() => {
     // インストール時に親アイテム作成
@@ -35,37 +34,39 @@ chrome.runtime.onInstalled.addListener(() => {
 
 function onClick(info: chrome.contextMenus.OnClickData) {
     console.log('clicked!!')
+    if (!info.editable) {
+        return;
+    }
+
+    console.log({ info });
 }
 
 function createMenuItem(templates: Template[]) {
     let isFavoriteEmpty = true;
     for (const template of templates) {
         if (template.isFavorite) {
-            isFavoriteEmpty = false
-            console.log('create item')
+            isFavoriteEmpty = false;
             chrome.contextMenus.create({
                 title: `#${template.id.split("-")[0]} ${template.name}`,
-                id: `temput_menu_${template.id}`,
+                id: template.id,
                 contexts: ['editable'],
                 parentId: parentMenuId
             });
         }
     }
 
+    // お気に入りが一つもない場合は親アイテムを無効化する
     if (isFavoriteEmpty) {
-        chrome.contextMenus.create({
-            title: "(お気に入りがありません)",
-            id: emptyMenuId,
-            contexts: ['editable'],
-            parentId: parentMenuId,
-            enabled: false
-        });
+        chrome.contextMenus.update(parentMenuId, { enabled: false });
+    } else {
+        chrome.contextMenus.update(parentMenuId, { enabled: true });
     }
 }
 
 function removeMenuItem(templates: Template[]) {
     for (const template of templates) {
-        chrome.contextMenus.remove(`temput_menu_${template.id}`);
+        if (template.isFavorite) {
+            chrome.contextMenus.remove(template.id);
+        }
     }
-    chrome.contextMenus.remove(emptyMenuId);
 }
