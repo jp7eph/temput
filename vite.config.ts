@@ -30,6 +30,12 @@ const manifest = defineManifest({
   background: {
     service_worker: 'src/background.ts'
   },
+  content_scripts: [
+    {
+      matches: ['<all_urls>'],
+      js: ['src/content-script.ts']
+    }
+  ],
   minimum_chrome_version: "98"
 })
 

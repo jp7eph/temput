@@ -3,6 +3,7 @@ import { Template } from "./template";
 export { };
 
 const parentMenuId = "temput_menu_parent";
+let templates: Array<Template> = [];
 
 chrome.runtime.onInstalled.addListener(() => {
     // インストール時に親アイテム作成
@@ -14,8 +15,8 @@ chrome.runtime.onInstalled.addListener(() => {
 
     // 初回インストール後はストレージのonChangeイベントが発火しないため1回だけ子アイテム追加
     chrome.storage.local.get("templates", function (value) {
-        const t = Object.values(value.templates) as Template[];
-        createMenuItem(t);
+        templates = Object.values(value.templates) as Template[];
+        createMenuItem(templates);
     })
 
     // アイテムクリック時のイベント登録
@@ -29,16 +30,23 @@ chrome.runtime.onInstalled.addListener(() => {
         if (changes.templates.newValue != undefined) {
             createMenuItem(changes.templates.newValue as Template[]);
         }
+        templates = changes.templates.newValue;
     });
 });
 
-function onClick(info: chrome.contextMenus.OnClickData) {
-    console.log('clicked!!')
+function onClick(info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) {
     if (!info.editable) {
         return;
     }
+    if (tab == undefined) {
+        return;
+    }
 
-    console.log({ info });
+    // content-script.tsに送信
+    chrome.tabs.sendMessage(
+        tab.id as number,
+        templates.find((t) => t.id === info.menuItemId)?.value
+    ).catch((e) => { console.error(`[temput] send context-script error: ${e}`) })
 }
 
 function createMenuItem(templates: Template[]) {
