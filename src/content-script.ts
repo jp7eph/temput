@@ -6,5 +6,6 @@ chrome.runtime.onMessage.addListener((request) => {
         return;
     }
 
+    // TODO: Jiraの場合上手く貼り付けできない
     document.activeElement.innerHTML += request;
 });
