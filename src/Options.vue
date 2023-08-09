@@ -9,6 +9,8 @@ import {
   mdiClose,
   mdiDelete,
   mdiDownload,
+  mdiHeart,
+  mdiHeartOutline,
   mdiPencil,
   mdiPlus,
   mdiRestoreAlert,
@@ -172,7 +174,7 @@ function showSnackBar(text: string, color: string) {
                 </v-row>
                 <template v-slot:append>
                   <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
-                  <v-btn :icon="mdiPencil" variant="text" class="mr-4">
+                  <v-btn :icon="mdiPencil" variant="text" class="mr-1">
                     <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
                     <v-icon></v-icon>
                     <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
@@ -183,6 +185,21 @@ function showSnackBar(text: string, color: string) {
                       />
                     </v-dialog>
                   </v-btn>
+                  <v-btn
+                    v-if="template.isFavorite"
+                    :icon="mdiHeart"
+                    variant="text"
+                    color="pink"
+                    class="mr-1"
+                    @click="template.isFavorite = !template.isFavorite"
+                  ></v-btn>
+                  <v-btn
+                    v-else
+                    :icon="mdiHeartOutline"
+                    variant="text"
+                    class="mr-1"
+                    @click="template.isFavorite = !template.isFavorite"
+                  ></v-btn>
                   <v-btn
                     :icon="mdiDelete"
                     variant="text"
@@ -203,7 +220,7 @@ function showSnackBar(text: string, color: string) {
                 <v-btn
                   :icon="mdiDownload"
                   variant="text"
-                  class="mr-4"
+                  class="mr-1"
                   @click="exportSetting"
                 >
                   <v-icon></v-icon>
