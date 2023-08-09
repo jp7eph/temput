@@ -11,19 +11,20 @@ const manifest = defineManifest({
   description: 'Copy template text',
   version: PackageJson.version,
   icons: {
-    '16': 'icons/temput_16.png',
-    '32': 'icons/temput_32.png',
-    '48': 'icons/temput_48.png',
-    '128': 'icons/temput_128.png',
+    16: 'icons/temput_16.png',
+    32: 'icons/temput_32.png',
+    48: 'icons/temput_48.png',
+    128: 'icons/temput_128.png',
   },
   permissions: [
     'storage'
   ],
   action: {
-    'default_popup': 'index.html'
+    default_popup: 'index.html'
   },
   options_ui: {
-    'page': 'options.html'
+    page: 'options.html',
+    open_in_tab: true
   }
 })
 

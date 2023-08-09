@@ -3,7 +3,18 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { Template } from "../template";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import { mdiFormatBold, mdiFormatItalic, mdiFormatListBulleted, mdiFormatListNumbered, mdiFormatStrikethrough, mdiFormatUnderline, mdiRedo, mdiUndo, mdiXml } from "@mdi/js";
+import {
+  mdiFormatBold,
+  mdiFormatClear,
+  mdiFormatItalic,
+  mdiFormatListBulleted,
+  mdiFormatListNumbered,
+  mdiFormatStrikethrough,
+  mdiFormatUnderline,
+  mdiRedo,
+  mdiUndo,
+  mdiXml,
+} from "@mdi/js";
 
 interface Props {
   template: Template;
@@ -26,7 +37,10 @@ const editor = useEditor({
 });
 </script>
 <template>
-  <v-card title="テンプレート編集" style="min-height: 300px; min-width: 350px">
+  <v-card
+    title="テンプレート編集"
+    style="min-height: 300px; min-width: 500px; max-width: 700px"
+  >
     <!-- タイトルバーの閉じるボタン 親コンポーネントの修正も必要 -->
     <!-- <template v-slot:append>
       <v-btn icon="$close" variant="text" @click=""></v-btn>
@@ -36,7 +50,7 @@ const editor = useEditor({
         v-model="template.name"
         hide-details
         clearable
-        placeholder="テンプレート名"
+        placeholder="テンプレート名（任意）"
         variant="underlined"
       >
       </v-text-field>
@@ -106,6 +120,14 @@ const editor = useEditor({
           rounded="sm"
           variant="text"
           @click="editor?.chain().toggleCodeBlock().focus().run()"
+        ></v-btn>
+        <v-divider vertical></v-divider>
+        <v-btn
+          :icon="mdiFormatClear"
+          density="comfortable"
+          rounded="sm"
+          variant="text"
+          @click="editor?.chain().clearNodes().focus().run()"
         ></v-btn>
       </v-row>
       <v-row>

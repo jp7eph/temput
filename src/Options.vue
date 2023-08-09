@@ -135,65 +135,67 @@ function showSnackBar(text: string, color: string) {
 
 <template>
   <v-layout class="rounded rounded-md">
-    <v-main style="min-height: 500px; min-width: 500px">
+    <v-main>
       <v-tabs v-model="tab" align-tabs="center">
         <v-tab value="templates">テンプレート一覧</v-tab>
         <v-tab value="settings">設定</v-tab>
       </v-tabs>
       <v-window v-model="tab">
         <v-window-item value="templates">
-          <!-- FAB -->
-          <v-layout-item
-            class="text-end"
-            model-value
-            position="bottom"
-            size="88"
-          >
-            <div class="ma-4">
-              <v-btn
-                class="mt-auto text-white"
-                color="blue"
-                :icon="mdiPlus"
-                size="large"
-                @click="addTemplate"
-              />
-            </div>
-          </v-layout-item>
-          <v-list lines="one">
-            <v-list-item v-for="template in templatesRef" :key="template.id">
-              <v-row no-gutters>
-                <v-col cols="4" class="d-flex justify-start text-disabled">
-                  #{{ template.id.split("-")[0] }}
-                </v-col>
-                <v-col cols="8">
-                  <span> {{ template.name }} </span>
-                </v-col>
-              </v-row>
-              <template v-slot:append>
-                <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
-                <v-btn :icon="mdiPencil" variant="text" class="mr-4">
-                  <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
-                  <v-icon></v-icon>
-                  <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
-                  <v-dialog activator="parent" width="auto">
-                    <DialogEdit
-                      :template="template"
-                      v-model:value="template.value"
-                    />
-                  </v-dialog>
-                </v-btn>
+          <v-container style="max-width: 700px">
+            <!-- FAB -->
+            <v-layout-item
+              class="text-end"
+              model-value
+              position="bottom"
+              size="88"
+            >
+              <div class="ma-4">
                 <v-btn
-                  :icon="mdiDelete"
-                  variant="text"
-                  color="error"
-                  @click="removeTemplate(template.id)"
-                ></v-btn>
-              </template>
-            </v-list-item>
-          </v-list>
+                  class="mt-auto text-white"
+                  color="blue"
+                  :icon="mdiPlus"
+                  size="large"
+                  @click="addTemplate"
+                />
+              </div>
+            </v-layout-item>
+            <v-list lines="one">
+              <v-list-item v-for="template in templatesRef" :key="template.id">
+                <v-row no-gutters>
+                  <v-col cols="4" class="d-flex justify-start text-disabled">
+                    #{{ template.id.split("-")[0] }}
+                  </v-col>
+                  <v-col cols="8">
+                    <span> {{ template.name }} </span>
+                  </v-col>
+                </v-row>
+                <template v-slot:append>
+                  <!-- FIXIT: 設定画面でダイアログ表示時に幅が変更される -->
+                  <v-btn :icon="mdiPencil" variant="text" class="mr-4">
+                    <!-- HACK: <v-iconを置かないとアイコンが表示されない> -->
+                    <v-icon></v-icon>
+                    <!-- NOTE: ボタンを押した要素だけダイアログを表示するためにactivatorをparentにする -->
+                    <v-dialog activator="parent" width="auto">
+                      <DialogEdit
+                        :template="template"
+                        v-model:value="template.value"
+                      />
+                    </v-dialog>
+                  </v-btn>
+                  <v-btn
+                    :icon="mdiDelete"
+                    variant="text"
+                    color="error"
+                    @click="removeTemplate(template.id)"
+                  ></v-btn>
+                </template>
+              </v-list-item>
+            </v-list>
+          </v-container>
         </v-window-item>
         <v-window-item value="settings">
-          <v-container>
+          <v-container style="max-width: 700px">
             <v-row align="center" no-gutters class="mb-4">
               <div class="text-body-1">エクスポート/インポート</div>
               <v-spacer></v-spacer>
@@ -227,7 +229,7 @@ function showSnackBar(text: string, color: string) {
                 </form>
               </div>
             </v-row>
-            <v-row no-gutters class="mb-4">
+            <v-row align="center" no-gutters class="mb-4">
               <div class="text-body-1">設定リセット</div>
               <v-spacer></v-spacer>
               <v-btn
